@@ -1,10 +1,10 @@
-import { Fragment, useEffect, useState } from 'react'
+import { CircularProgress } from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
-import { CircularProgress } from '@mui/material'
+import { Fragment, useEffect, useState } from 'react'
+import type { CityType } from '../../types'
 import allCities from './data/cities.json'
-import type { CityType } from './types.ts'
 
 type Props = { handleLocation: (city: CityType) => void }
 
@@ -35,7 +35,7 @@ const CountrySelect = ({handleLocation}: Props) => {
 
     return (
         <Autocomplete
-        className="mx-auto w-full"
+        className="mx-auto w-full md:max-w-sm"
         id="country-select-demo"
         sx={{ width: 300 }}
         open={isOpen}

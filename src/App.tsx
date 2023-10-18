@@ -1,10 +1,10 @@
-import './App.css'
-import { Container, Typography, Button } from '@mui/material'
-import UserWeather from './components/userWeather/UserWeather'
-import SearchBox from './components/searchBox/SearchBox'
+import { Container, Typography } from '@mui/material'
 import { useState } from 'react'
+import './App.css'
 import CityWeather from './components/cityWeather/CityWeather'
-import { CityType } from './components/searchBox/types'
+import SearchBox from './components/searchBox/SearchBox'
+import UserWeather from './components/userWeather/UserWeather'
+import { CityType } from './types'
 
 function App() {
   const [location, setLocation] = useState<CityType | null>(null)
@@ -15,17 +15,16 @@ function App() {
 
   return (
     <>
-      <Container className="font-bold">
-        <Typography className='py-4 text-lg' variant='h1' color='secondary'>
+      <Container className="font-bold px-0">
+        <Typography className='mb-4 py-4 text-lg' variant='h1' color='secondary'>
           Amazing Weather App!
         </Typography>
-        <Button variant="contained">Let's coding</Button>
-        <Container className="">
+        <Container className="px-0">
           <SearchBox handleLocation={handleLocation}/>
         </Container>
         {!location ? 
           <UserWeather/>
-        : <CityWeather name={location.name} country={location.country} subcountry={location.subcountry} geonameid={location.geonameid}></CityWeather>}
+        : <CityWeather {...location}></CityWeather>}
       </Container>
     </>
   )

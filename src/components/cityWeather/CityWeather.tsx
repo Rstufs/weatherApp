@@ -1,41 +1,46 @@
-import { Typography } from "@mui/material"
-import CardWeather from "../cardWeather/CardWeather"
+import { Container, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import { CityType } from "../searchBox/types"
-import type { WeatherData } from '../cardWeather/CardWeather'
+import { getCurrentWeatherByCity } from "../../services/weather/getCurrentWeather"
+import { getForecastWeatherByCity } from "../../services/weather/getForecastWeather"
+import { CityType, CompleteWeatherData, DailyForecast, WeatherData } from "../../types"
+import CardForecast from "../cardForecast/CardForecast"
+import CardWeather from "../cardWeather/CardWeather"
 
 const CityWeather = ( {name, country, subcountry, geonameid}: CityType ) => {
-    const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
-    const getWeather = async (name: string, city_id: number) => {
-        const apiKey = import.meta.env.VITE_API_KEY
-        const url = `https://api.weatherbit.io/v2.0/current?city=${name}&city_id=${city_id}&key=${apiKey}`
-        let dataWeather = null
-        try {
-            const response = await fetch(url);
-            const { data } = await response.json();
-            dataWeather = data[0]
-        } catch (error) {
-            console.error(error);
-        }
-        return dataWeather
-    }
+    const [weatherData, setWeatherData] = useState<CompleteWeatherData | null>(null)
 
     useEffect( () => {
         const fetchWeather = async() => {
-            const data = await getWeather(name, geonameid)
-            setWeatherData(data)
+            const { city_name, datetime, sunrise, sunset, temp, weather}: WeatherData = await getCurrentWeatherByCity(name, geonameid)
+            const forecast: DailyForecast[] = await getForecastWeatherByCity(name, geonameid)
+            setWeatherData({
+                city_name,
+                datetime,
+                sunrise,
+                sunset,
+                temp,
+                weather,
+                forecast
+            })
         }
         fetchWeather()
     }, [name, country])
 
     return (
         <>
-            <Typography className='py-4 text-base text-black' variant='h2'>
+            <Typography className='py-4 text-xl text-black font-bold md:text-3xl md:pt-6' variant='h1'>
                 {name}
             </Typography>
             {weatherData ? (
-                <CardWeather city_name={weatherData.city_name} datetime={weatherData.datetime} sunrise={weatherData.sunrise} sunset={weatherData.sunset} temp={weatherData.temp} weather={weatherData.weather}/>
-            ) : null }
+                <CardWeather {...weatherData}/>
+            ) : null}
+            <Container className="grid grid-cols-7 gap-1">
+            {weatherData?.forecast ? ( 
+                weatherData?.forecast.map( (day, idx) => (
+                    <CardForecast key={idx} datetime={day.datetime} high_temp={day.high_temp} low_temp={day.low_temp} temp={day.temp} weather={day.weather}/>
+                )
+            )) : null}
+            </Container>
         </>
     )
 }
