@@ -1,11 +1,8 @@
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
+import { cardWeatherFormatDate } from "../../helpers/formatingDates"
 import { WeatherData } from "../../types"
 
-const DaysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const today = new Date()
-const day = today.getDay()
-const dayOfMonth = today.getDate()
 
 const CardWeather = ( { city_name, datetime, sunrise, sunset, temp, weather }: WeatherData ) => {
     return (
@@ -21,7 +18,7 @@ const CardWeather = ( { city_name, datetime, sunrise, sunset, temp, weather }: W
                     <img src={`/icons/${weather.icon}.png`} alt='Icon'/>
                     <Container className="flex items-center px-0 max-w-xs lg:items-baseline">
                         <Typography className='w-full text-sm text-black font-bold pr-2 md:text-xl md:pr-0 lg:text-3xl' variant='h2'>
-                        {DaysOfWeek[day]} {dayOfMonth}
+                        {cardWeatherFormatDate(datetime)}
                         </Typography>
                         <Typography className="text-black pl-2 lg:text-5xl" variant="h2">
                             {`${temp}°`}

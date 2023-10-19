@@ -36,6 +36,7 @@ const CountrySelect = ({handleLocation}: Props) => {
     return (
         <Autocomplete
         className="mx-auto w-full md:max-w-sm"
+        data-testid="autocomplete"
         id="country-select-demo"
         sx={{ width: 300 }}
         open={isOpen}

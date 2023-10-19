@@ -1,8 +1,7 @@
 import { Container, Typography } from '@mui/material'
 import { useState } from 'react'
-import './App.css'
 import CityWeather from './components/cityWeather/CityWeather'
-import SearchBox from './components/searchBox/SearchBox'
+import CountrySelect from './components/countrySelect/CountrySelect'
 import UserWeather from './components/userWeather/UserWeather'
 import { CityType } from './types'
 
@@ -20,7 +19,7 @@ function App() {
           Amazing Weather App!
         </Typography>
         <Container className="px-0">
-          <SearchBox handleLocation={handleLocation}/>
+          <CountrySelect handleLocation={handleLocation}/>
         </Container>
         {!location ? 
           <UserWeather/>

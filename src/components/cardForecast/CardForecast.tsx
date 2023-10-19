@@ -2,8 +2,6 @@ import { Typography } from "@mui/material"
 import Container from "@mui/material/Container"
 import { DailyForecast } from "../../types"
 
-const today = new Date()
-const dayOfMonth = today.getDate()
 
 const CardForecast = ( { datetime, high_temp, low_temp, temp, weather }: DailyForecast ) => {
     
@@ -11,7 +9,7 @@ const CardForecast = ( { datetime, high_temp, low_temp, temp, weather }: DailyFo
         <>
             <Container className="flex flex-col w-full px-0">
                 <Typography className='w-full text-sm text-gray-400 font-bold lg:text-base' variant='h2'>
-                    {dayOfMonth}
+                    {datetime.getDate()}
                 </Typography>
                 <Container className="flex flex-col w-full px-0 lg:flex-row lg:items-center">
                     <img className="w-full lg:w-2/3" src={`/icons/${weather.icon}.png`} alt='Icon'/>

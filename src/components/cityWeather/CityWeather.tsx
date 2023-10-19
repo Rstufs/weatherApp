@@ -15,7 +15,7 @@ const CityWeather = ( {name, country, subcountry, geonameid}: CityType ) => {
             const forecast: DailyForecast[] = await getForecastWeatherByCity(name, geonameid)
             setWeatherData({
                 city_name,
-                datetime,
+                datetime: new Date(datetime),
                 sunrise,
                 sunset,
                 temp,
@@ -37,7 +37,7 @@ const CityWeather = ( {name, country, subcountry, geonameid}: CityType ) => {
             <Container className="grid grid-cols-7 gap-1">
             {weatherData?.forecast ? ( 
                 weatherData?.forecast.map( (day, idx) => (
-                    <CardForecast key={idx} datetime={day.datetime} high_temp={day.high_temp} low_temp={day.low_temp} temp={day.temp} weather={day.weather}/>
+                    <CardForecast key={idx} datetime={new Date(day.datetime)} high_temp={day.high_temp} low_temp={day.low_temp} temp={day.temp} weather={day.weather}/>
                 )
             )) : null}
             </Container>

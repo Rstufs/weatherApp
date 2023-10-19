@@ -14,10 +14,15 @@ const UserWeather = () => {
     useEffect( () => {
         if(currentNavLocation){
             const fetchCurrentWeather = async() => {
-                const currentWeather: WeatherData = await getCurrentWeatherByLocation(currentNavLocation)
+                const { city_name, datetime, sunrise, sunset, temp, weather}: WeatherData = await getCurrentWeatherByLocation(currentNavLocation)
                 const currentForecast: DailyForecast[] = await getForecastWeatherByLocation(currentNavLocation)
                 setCurrentWeather({
-                    ...currentWeather,
+                    city_name,
+                    datetime: new Date(datetime),
+                    sunrise,
+                    sunset,
+                    temp,
+                    weather,
                     forecast: currentForecast
                 })
             }
@@ -35,11 +40,11 @@ const UserWeather = () => {
                 <Typography className='py-4 text-xl font-bold text-black' variant='h1'>
                     {currentWeather.city_name}
                 </Typography>
-                <CardWeather {...currentWeather}/>
+                <CardWeather city_name={currentWeather.city_name} datetime={currentWeather.datetime} sunrise={currentWeather.sunrise} sunset={currentWeather.sunset} temp={currentWeather.temp} weather={currentWeather.weather}/>
                 <Container className="grid grid-cols-7 gap-1">
                 {currentWeather?.forecast ? ( 
                     currentWeather?.forecast.map( (day, idx) => (
-                        <CardForecast key={idx} datetime={day.datetime} high_temp={day.high_temp} low_temp={day.low_temp} temp={day.temp} weather={day.weather}/>
+                        <CardForecast key={idx} datetime={new Date(day.datetime)} high_temp={day.high_temp} low_temp={day.low_temp} temp={day.temp} weather={day.weather}/>
                     )
                 )) : null}
                 </Container>
