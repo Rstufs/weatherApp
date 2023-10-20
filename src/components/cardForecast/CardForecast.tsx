@@ -12,7 +12,7 @@ const CardForecast = ( { datetime, high_temp, low_temp, temp, weather }: DailyFo
                     {datetime.getDate()}
                 </Typography>
                 <Container className="flex flex-col w-full px-0 lg:flex-row lg:items-center">
-                    <img className="w-full lg:w-2/3" src={`/icons/${weather.icon}.png`} alt='Icon'/>
+                    <img className="w-full lg:w-2/3" src={`icons/${weather.icon}.png`} alt='Icon'/>
                     <Typography className='text-base font-bold text-black lg:w-1/3 lg:text-lg lg:justify-self-start' variant='h2'>
                         {`${temp}°`}
                     </Typography>
